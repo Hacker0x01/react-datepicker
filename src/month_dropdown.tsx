@@ -5,6 +5,11 @@ import {
   getMonthInLocale,
   type Locale,
 } from "./date_utils";
+import {
+  DropdownReadView,
+  dropdownContainerClassName,
+  renderScrollModeChildren,
+} from "./dropdown_common";
 import MonthDropdownOptions from "./month_dropdown_options";
 
 interface MonthDropdownOptionsProps extends React.ComponentPropsWithoutRef<
@@ -56,18 +61,14 @@ export default class MonthDropdown extends Component<
     visible: boolean,
     monthNames: string[],
   ): React.ReactElement => (
-    <button
+    <DropdownReadView
       key="read"
-      type="button"
-      style={{ visibility: visible ? "visible" : "hidden" }}
-      className="react-datepicker__month-read-view"
+      kind="month"
+      visible={visible}
       onClick={this.toggleDropdown}
     >
-      <span className="react-datepicker__month-read-view--down-arrow" />
-      <span className="react-datepicker__month-read-view--selected-month">
-        {monthNames[this.props.month]}
-      </span>
-    </button>
+      {monthNames[this.props.month]}
+    </DropdownReadView>
   );
 
   renderDropdown = (monthNames: string[]): React.ReactElement => (
@@ -82,11 +83,11 @@ export default class MonthDropdown extends Component<
 
   renderScrollMode = (monthNames: string[]): React.ReactElement[] => {
     const { dropdownVisible } = this.state;
-    const result = [this.renderReadView(!dropdownVisible, monthNames)];
-    if (dropdownVisible) {
-      result.unshift(this.renderDropdown(monthNames));
-    }
-    return result;
+    return renderScrollModeChildren(
+      this.renderReadView(!dropdownVisible, monthNames),
+      dropdownVisible,
+      this.renderDropdown(monthNames),
+    );
   };
 
   onChange = (month: number): void => {
@@ -120,7 +121,7 @@ export default class MonthDropdown extends Component<
 
     return (
       <div
-        className={`react-datepicker__month-dropdown-container react-datepicker__month-dropdown-container--${this.props.dropdownMode}`}
+        className={dropdownContainerClassName("month", this.props.dropdownMode)}
       >
         {renderedDropdown}
       </div>

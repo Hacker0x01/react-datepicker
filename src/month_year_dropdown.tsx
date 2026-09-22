@@ -13,6 +13,11 @@ import {
   getTime,
   type Locale,
 } from "./date_utils";
+import {
+  DropdownReadView,
+  dropdownContainerClassName,
+  renderScrollModeChildren,
+} from "./dropdown_common";
 
 import MonthYearDropdownOptions from "./month_year_dropdown_options";
 
@@ -91,17 +96,14 @@ export default class MonthYearDropdown extends Component<
     );
 
     return (
-      <div
+      <DropdownReadView
         key="read"
-        style={{ visibility: visible ? "visible" : "hidden" }}
-        className="react-datepicker__month-year-read-view"
+        kind="month-year"
+        visible={visible}
         onClick={this.toggleDropdown}
       >
-        <span className="react-datepicker__month-year-read-view--down-arrow" />
-        <span className="react-datepicker__month-year-read-view--selected-month-year">
-          {yearMonth}
-        </span>
-      </div>
+        {yearMonth}
+      </DropdownReadView>
     );
   };
 
@@ -116,11 +118,11 @@ export default class MonthYearDropdown extends Component<
 
   renderScrollMode = (): React.ReactElement[] => {
     const { dropdownVisible } = this.state;
-    const result = [this.renderReadView(!dropdownVisible)];
-    if (dropdownVisible) {
-      result.unshift(this.renderDropdown());
-    }
-    return result;
+    return renderScrollModeChildren(
+      this.renderReadView(!dropdownVisible),
+      dropdownVisible,
+      this.renderDropdown(),
+    );
   };
 
   onChange = (monthYearPoint: number): void => {
@@ -156,7 +158,10 @@ export default class MonthYearDropdown extends Component<
 
     return (
       <div
-        className={`react-datepicker__month-year-dropdown-container react-datepicker__month-year-dropdown-container--${this.props.dropdownMode}`}
+        className={dropdownContainerClassName(
+          "month-year",
+          this.props.dropdownMode,
+        )}
       >
         {renderedDropdown}
       </div>

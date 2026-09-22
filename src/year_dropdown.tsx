@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
 import { getYear } from "./date_utils";
+import {
+  DropdownReadView,
+  dropdownContainerClassName,
+  renderScrollModeChildren,
+} from "./dropdown_common";
 import YearDropdownOptions from "./year_dropdown_options";
 
 interface YearDropdownOptionsProps extends React.ComponentPropsWithoutRef<
@@ -65,18 +70,14 @@ export default class YearDropdown extends Component<
   );
 
   renderReadView = (visible: boolean): React.ReactElement => (
-    <button
+    <DropdownReadView
       key="read"
-      type="button"
-      style={{ visibility: visible ? "visible" : "hidden" }}
-      className="react-datepicker__year-read-view"
+      kind="year"
+      visible={visible}
       onClick={this.toggleDropdown}
     >
-      <span className="react-datepicker__year-read-view--down-arrow" />
-      <span className="react-datepicker__year-read-view--selected-year">
-        {this.props.year}
-      </span>
-    </button>
+      {this.props.year}
+    </DropdownReadView>
   );
 
   renderDropdown = (): React.ReactElement => (
@@ -90,11 +91,11 @@ export default class YearDropdown extends Component<
 
   renderScrollMode = (): React.ReactElement[] => {
     const { dropdownVisible } = this.state;
-    const result = [this.renderReadView(!dropdownVisible)];
-    if (dropdownVisible) {
-      result.unshift(this.renderDropdown());
-    }
-    return result;
+    return renderScrollModeChildren(
+      this.renderReadView(!dropdownVisible),
+      dropdownVisible,
+      this.renderDropdown(),
+    );
   };
 
   onChange = (year: number): void => {
@@ -148,7 +149,7 @@ export default class YearDropdown extends Component<
 
     return (
       <div
-        className={`react-datepicker__year-dropdown-container react-datepicker__year-dropdown-container--${this.props.dropdownMode}`}
+        className={dropdownContainerClassName("year", this.props.dropdownMode)}
       >
         {renderedDropdown}
       </div>
