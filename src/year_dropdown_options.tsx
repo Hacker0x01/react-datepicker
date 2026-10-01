@@ -69,6 +69,8 @@ export default class YearDropdownOptions extends Component<
   componentDidMount(): void {
     const dropdownCurrent = this.dropdownRef.current;
 
+    this.yearOptionButtonsRef[this.props.year]?.focus();
+
     if (dropdownCurrent) {
       // Get array from HTMLCollection
       const dropdownCurrentChildren = dropdownCurrent.children
@@ -122,9 +124,6 @@ export default class YearDropdownOptions extends Component<
       <div
         ref={(el) => {
           this.yearOptionButtonsRef[year] = el;
-          if (year === selectedYear) {
-            el?.focus();
-          }
         }}
         role="button"
         tabIndex={0}

@@ -576,6 +576,61 @@ describe("DatePicker", () => {
     expect(onYearChangeSpy).toHaveBeenCalled();
   });
 
+  it.each([
+    ["previous", 2008],
+    ["upcoming", 2044],
+  ] as const)(
+    "selects a date after repeated %s year navigation and refocuses it on reopening",
+    (direction, targetYear) => {
+      const onChangeSpy = jest.fn();
+      function ControlledDatePicker() {
+        const [selected, setSelected] = useState<Date | null>(
+          new Date(2026, 9, 1),
+        );
+        return (
+          <DatePicker
+            selected={selected}
+            onChange={(date) => {
+              onChangeSpy(date);
+              setSelected(date);
+            }}
+            showYearDropdown
+            scrollableYearDropdown
+            yearDropdownItemNumber={15}
+          />
+        );
+      }
+      const { container, getByRole } = render(<ControlledDatePicker />);
+      const input = safeQuerySelector<HTMLInputElement>(container, "input");
+      fireEvent.click(input);
+      fireEvent.click(getByRole("button", { name: "2026" }));
+      expect(document.activeElement?.textContent).toBe("✓2026");
+
+      for (let step = 0; step < 3; step++) {
+        fireEvent.click(
+          safeQuerySelector(
+            container,
+            `.react-datepicker__navigation--years-${direction}`,
+          ),
+        );
+      }
+      fireEvent.click(getByRole("button", { name: String(targetYear) }));
+      expect(
+        container.querySelector(".react-datepicker__year-dropdown"),
+      ).toBeNull();
+      fireEvent.click(
+        safeQuerySelector(container, ".react-datepicker__day--001"),
+      );
+      expect(onChangeSpy).toHaveBeenLastCalledWith(new Date(targetYear, 9, 1));
+      expect(input.value).toBe(`10/01/${targetYear}`);
+      expect(container.querySelector(".react-datepicker")).toBeNull();
+
+      fireEvent.click(input);
+      fireEvent.click(getByRole("button", { name: String(targetYear) }));
+      expect(document.activeElement?.textContent).toBe(`✓${targetYear}`);
+    },
+  );
+
   it("should keep the calendar shown when clicking the calendar", () => {
     const { container } = render(<DatePicker />);
     const input = safeQuerySelector(container, "input");

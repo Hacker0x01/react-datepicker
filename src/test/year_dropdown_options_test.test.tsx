@@ -133,6 +133,39 @@ describe("YearDropdownOptions", () => {
     expect(handleChangeResult).toBe(2015);
   });
 
+  it("focuses the selected year when the options first open", () => {
+    expect(document.activeElement).toBe(
+      yearDropdown.querySelector("[aria-selected='true']"),
+    );
+  });
+
+  it.each(["previous", "upcoming"])(
+    "does not refocus the selected year when navigating %s years repeatedly",
+    (direction) => {
+      const selectedYear = safeQuerySelector(
+        yearDropdown,
+        "[aria-selected='true']",
+      );
+      const focusSpy = jest.spyOn(selectedYear, "focus");
+      fireEvent.keyDown(selectedYear, { key: "ArrowDown" });
+      const focusedYear = document.activeElement;
+      expect(focusedYear?.textContent).toBe("2014");
+
+      for (let step = 0; step < 3; step++) {
+        fireEvent.click(
+          safeQuerySelector(
+            yearDropdown,
+            `.react-datepicker__navigation--years-${direction}`,
+          ),
+        );
+        expect(document.activeElement).toBe(focusedYear);
+      }
+
+      expect(focusSpy).not.toHaveBeenCalled();
+      focusSpy.mockRestore();
+    },
+  );
+
   it("calls the supplied onCancel function on handleClickOutside", () => {
     render(
       <YearDropdownOptions
