@@ -223,12 +223,19 @@ h2.react-datepicker__current-month {
     margin-left: auto;
     margin-right: auto;
 
-    &-previous {
-      top: 4px;
+    &::before {
+      @extend %navigation-chevron;
+
+      top: 11px;
+      left: 11px;
     }
 
-    &-upcoming {
-      top: -4px;
+    &-previous::before {
+      transform: rotate(135deg);
+    }
+
+    &-upcoming::before {
+      transform: rotate(315deg);
     }
   }
 
@@ -676,6 +683,11 @@ h2.react-datepicker__current-month {
   }
 }
 
+.react-datepicker__year-dropdown--scrollable {
+  // Keep the navigation controls in view when years are added and removed.
+  overflow-anchor: none;
+}
+
 .react-datepicker__year-option,
 .react-datepicker__month-option,
 .react-datepicker__month-year-option {
@@ -702,18 +714,8 @@ h2.react-datepicker__current-month {
   &:hover {
     background-color: $datepicker__muted-color;
 
-    .react-datepicker__navigation--years-upcoming {
-      border-bottom-color: color.adjust(
-        $datepicker__muted-color,
-        $lightness: -10%
-      );
-    }
-
-    .react-datepicker__navigation--years-previous {
-      border-top-color: color.adjust(
-        $datepicker__muted-color,
-        $lightness: -10%
-      );
+    .react-datepicker__navigation--years::before {
+      border-color: color.adjust($datepicker__muted-color, $lightness: -10%);
     }
   }
 
