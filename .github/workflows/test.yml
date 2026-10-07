@@ -7,6 +7,9 @@ on:
     # The branches below must be a subset of the branches above
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -17,6 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup kernel for react, increase watchers
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
@@ -62,7 +67,7 @@ jobs:
       - name: Test
         run: yarn test:ci
 
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:

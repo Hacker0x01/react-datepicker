@@ -4,11 +4,16 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set Node.js
         uses: actions/setup-node@v4
@@ -38,7 +43,7 @@ jobs:
         run: yarn --cwd docs-site build
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: docs-site/dist # The folder the action should deploy.
