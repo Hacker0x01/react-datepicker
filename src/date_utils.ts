@@ -23,6 +23,7 @@ import {
   format,
   getDate,
   getDay,
+  getDefaultOptions,
   getHours,
   getISOWeek,
   getMinutes,
@@ -415,23 +416,66 @@ export function formatDate(
   formatStr: string,
   locale?: Locale,
 ): string {
+  return format(date, formatStr, {
+    locale: getFormatLocaleObject(locale),
+    useAdditionalWeekYearTokens: true,
+    useAdditionalDayOfYearTokens: true,
+  });
+}
+
+/**
+ * Gets the locale object that a date is formatted with.
+ *
+ * @param locale - The locale.
+ * @returns - The locale object, or undefined to format with the date-fns default locale.
+ */
+function getFormatLocaleObject(locale?: Locale): LocaleObj | undefined {
   if (locale === "en") {
-    return format(date, formatStr, {
-      useAdditionalWeekYearTokens: true,
-      useAdditionalDayOfYearTokens: true,
-    });
+    return undefined;
   }
-  let localeObj = locale ? getLocaleObject(locale) : undefined;
+  const localeObj = locale ? getLocaleObject(locale) : undefined;
   if (locale && !localeObj) {
     console.warn(
       `A locale object was not found for the provided string ["${locale}"].`,
     );
   }
-  localeObj = localeObj || getLocaleObject(getDefaultLocale());
-  return format(date, formatStr, {
-    locale: localeObj,
-    useAdditionalWeekYearTokens: true,
-    useAdditionalDayOfYearTokens: true,
+  return localeObj || getLocaleObject(getDefaultLocale());
+}
+
+/**
+ * Formats a date in the locale's long date format (`PPPP`), but writes the day
+ * of the month as a plain number where the locale writes it as an ordinal:
+ * "Sunday, September 27, 2026" instead of "Sunday, September 27th, 2026".
+ * Every other part of the date is formatted exactly as the locale formats it.
+ *
+ * A day cell shows the plain day number, and its accessible name must contain
+ * that visible text (WCAG 2.5.3 Label in Name).
+ *
+ * @param date - The date.
+ * @param locale - The locale.
+ * @returns - The formatted date.
+ */
+export function formatLongDateWithCardinalDay(
+  date: Date,
+  locale?: Locale,
+): string {
+  const localeObj = getFormatLocaleObject(locale) ?? getDefaultOptions().locale;
+
+  if (!localeObj) {
+    // date-fns formats with its built-in en-US locale, whose long date format
+    // is "EEEE, MMMM do, y". Spelling that format out with a plain day avoids
+    // bundling a second copy of the en-US locale.
+    return format(date, "EEEE, MMMM d, y");
+  }
+
+  // In every date-fns locale, the day of the month is the only ordinal in the
+  // long date format.
+  return formatDate(date, "PPPP", {
+    ...localeObj,
+    localize: {
+      ...localeObj.localize,
+      ordinalNumber: (value) => String(value),
+    },
   });
 }
 

@@ -12,6 +12,7 @@ import {
   addWeeks,
   addYears,
   formatDate,
+  formatLongDateWithCardinalDay,
   getDay,
   getEndOfWeek,
   getHours,
@@ -70,7 +71,7 @@ function findSelectedDay(container: HTMLElement, targetDate: Date) {
   return days.find(
     (d) =>
       d.getAttribute("aria-label") ===
-      `Choose ${formatDate(targetDate, "PPPP")}`,
+      `Choose ${formatLongDateWithCardinalDay(targetDate)}`,
   );
 }
 
