@@ -16,6 +16,7 @@ import {
   getDayOfWeekCode,
   getStartOfWeek,
   formatDate,
+  formatLongDateWithCardinalDay,
   type DateFilterOptionsWithDisabled,
   type DateNumberType,
   type Locale,
@@ -481,7 +482,9 @@ export default class Day extends Component<DayProps> {
         ? ariaLabelPrefixWhenDisabled
         : ariaLabelPrefixWhenEnabled;
 
-    return `${prefix} ${formatDate(day, "PPPP", this.props.locale)}`;
+    // The cell shows the plain day number, so the label must not spell the day
+    // of the month as an ordinal ("27th").
+    return `${prefix} ${formatLongDateWithCardinalDay(day, this.props.locale)}`;
   };
 
   // A function to return the holiday's name as title's content

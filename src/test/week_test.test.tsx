@@ -4,7 +4,7 @@ import React from "react";
 import {
   addDays,
   addWeeks,
-  formatDate,
+  formatLongDateWithCardinalDay,
   getMonth,
   getStartOfWeek,
   getWeek,
@@ -51,7 +51,7 @@ describe("Week", () => {
     days.forEach((day, offset) => {
       const expectedDay = addDays(weekStart, offset);
       expect(day.getAttribute("aria-label")).toEqual(
-        `Choose ${formatDate(expectedDay, "PPPP")}`,
+        `Choose ${formatLongDateWithCardinalDay(expectedDay)}`,
       );
     });
 
@@ -72,7 +72,7 @@ describe("Week", () => {
     days.forEach((day, offset) => {
       const expectedDay = addDays(weekStart, offset);
       expect(day.getAttribute("aria-label")).toEqual(
-        `Choose ${formatDate(expectedDay, "PPPP")}`,
+        `Choose ${formatLongDateWithCardinalDay(expectedDay)}`,
       );
     });
 
@@ -102,7 +102,7 @@ describe("Week", () => {
       fireEvent.click(day);
       // eslint-disable-next-line jest/no-conditional-expect
       expect(day.getAttribute("aria-label")).toEqual(
-        `Choose ${formatDate(dayClicked, "PPPP")}`,
+        `Choose ${formatLongDateWithCardinalDay(dayClicked)}`,
       );
     } else {
       // eslint-disable-next-line jest/no-conditional-expect

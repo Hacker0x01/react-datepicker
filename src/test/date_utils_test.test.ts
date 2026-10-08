@@ -2,9 +2,17 @@ import {
   addYears,
   setSeconds,
   addQuarters,
+  setDefaultOptions,
   setHours,
   setMinutes,
 } from "date-fns";
+import { de } from "date-fns/locale/de";
+import { enGB } from "date-fns/locale/en-GB";
+import { enUS } from "date-fns/locale/en-US";
+import { es } from "date-fns/locale/es";
+import { fr } from "date-fns/locale/fr";
+import { hi } from "date-fns/locale/hi";
+import { ja } from "date-fns/locale/ja";
 import { ptBR } from "date-fns/locale/pt-BR";
 
 import {
@@ -57,6 +65,8 @@ import {
   isMonthYearDisabled,
   getDefaultLocale,
   safeToDate,
+  formatDate,
+  formatLongDateWithCardinalDay,
 } from "../date_utils";
 
 registerLocale("pt-BR", ptBR);
@@ -1855,6 +1865,140 @@ describe("date_utils", () => {
     it("returns null when given an empty string", () => {
       const result = safeToDate("" as unknown as Date);
       expect(result).toBeNull();
+    });
+  });
+
+  describe("formatLongDateWithCardinalDay", () => {
+    const sunday = new Date(2026, 8, 27);
+
+    beforeAll(() => {
+      registerLocale("de", de);
+    });
+
+    afterEach(() => {
+      setDefaultLocale(undefined);
+      setDefaultOptions({ locale: undefined });
+    });
+
+    it("writes the day of the month as a plain number in the date-fns default locale", () => {
+      expect(formatLongDateWithCardinalDay(sunday)).toBe(
+        "Sunday, September 27, 2026",
+      );
+      expect(formatLongDateWithCardinalDay(sunday, "en")).toBe(
+        "Sunday, September 27, 2026",
+      );
+    });
+
+    it.each([1, 2, 3, 4, 11, 12, 13, 21, 22, 23, 31])(
+      "writes day %i of the month without an ordinal suffix",
+      (day) => {
+        expect(formatLongDateWithCardinalDay(new Date(2026, 0, day))).toContain(
+          `January ${day}, 2026`,
+        );
+      },
+    );
+
+    it("formats like the en-US locale object when no locale is resolved", () => {
+      // Without a locale, the helper spells out the long date format of the
+      // date-fns built-in en-US locale instead of importing that locale.
+      expect(enUS.formatLong.date({ width: "full" })).toBe("EEEE, MMMM do, y");
+
+      for (let day = 0; day < 366; day++) {
+        const date = addDays(new Date(2028, 0, 1), day);
+        expect(formatLongDateWithCardinalDay(date)).toBe(
+          formatLongDateWithCardinalDay(date, enUS),
+        );
+      }
+    });
+
+    it.each([
+      ["en-US", enUS, "Sunday, September 27, 2026"],
+      ["de", de, "Sonntag, 27 September 2026"],
+      ["hi", hi, "रविवार, 27 सितंबर, 2026"],
+    ])(
+      "writes the day of the month as a plain number in the %s locale object",
+      (_name, locale, expected) => {
+        expect(formatLongDateWithCardinalDay(sunday, locale)).toBe(expected);
+      },
+    );
+
+    it("writes the day of the month as a plain number in a registered locale", () => {
+      expect(formatLongDateWithCardinalDay(sunday, "de")).toBe(
+        "Sonntag, 27 September 2026",
+      );
+    });
+
+    it("uses the default locale set with setDefaultLocale", () => {
+      setDefaultLocale("de");
+
+      expect(formatLongDateWithCardinalDay(sunday)).toBe(
+        "Sonntag, 27 September 2026",
+      );
+    });
+
+    it("uses the date-fns default locale set with setDefaultOptions", () => {
+      setDefaultOptions({ locale: de });
+
+      expect(formatLongDateWithCardinalDay(sunday)).toBe(
+        "Sonntag, 27 September 2026",
+      );
+    });
+
+    it("warns and falls back to the default locale when the locale is not registered", () => {
+      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+      expect(
+        formatLongDateWithCardinalDay(sunday, "not-registered-locale"),
+      ).toBe("Sunday, September 27, 2026");
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          'A locale object was not found for the provided string ["not-registered-locale"]',
+        ),
+      );
+
+      consoleWarnSpy.mockRestore();
+    });
+
+    it.each([
+      ["en-GB", enGB],
+      ["fr", fr],
+      ["es", es],
+      ["pt-BR (registered name)", "pt-BR"],
+      ["ja", ja],
+    ])(
+      "formats exactly like formatDate in %s, which has no ordinal day",
+      (_name, locale) => {
+        expect(formatLongDateWithCardinalDay(sunday, locale)).toBe(
+          formatDate(sunday, "PPPP", locale),
+        );
+      },
+    );
+
+    it.each([
+      ["the date-fns default locale", undefined],
+      ["en-US", enUS],
+      ["de", de],
+      ["hi", hi],
+    ])("changes only the ordinal day of the month in %s", (_name, locale) => {
+      const ordinalDay = formatDate(sunday, "do", locale);
+      const longDate = formatDate(sunday, "PPPP", locale);
+
+      expect(longDate).toContain(ordinalDay);
+      expect(formatLongDateWithCardinalDay(sunday, locale)).toBe(
+        longDate.replace(ordinalDay, "27"),
+      );
+    });
+
+    it("leaves the locale it is given unchanged", () => {
+      const { ordinalNumber } = enUS.localize;
+
+      formatLongDateWithCardinalDay(sunday, enUS);
+
+      expect(enUS.localize.ordinalNumber).toBe(ordinalNumber);
+      expect(formatDate(sunday, "PPPP", enUS)).toBe(
+        "Sunday, September 27th, 2026",
+      );
+      expect(formatDate(sunday, "do", enUS)).toBe("27th");
     });
   });
 });

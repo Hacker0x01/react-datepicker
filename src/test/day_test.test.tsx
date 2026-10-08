@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react";
-import { es } from "date-fns/locale";
+import { de, enGB, enUS, es, fr, hi } from "date-fns/locale";
 import React from "react";
 
 import {
@@ -1474,9 +1474,61 @@ describe("Day", () => {
     it("should display date in English is locale is not provided", () => {
       const day = newDate("2021-05-26");
       const container = renderDay(day);
-      expect(container.innerHTML.indexOf("Wednesday, May 26th, 2021")).not.toBe(
-        -1,
-      );
+      expect(
+        safeQuerySelector(container, ".react-datepicker__day").getAttribute(
+          "aria-label",
+        ),
+      ).toBe("Choose Wednesday, May 26, 2021");
+    });
+
+    it("should write the day of the month as a plain number when the date is disabled", () => {
+      const day = newDate("2021-05-26");
+      const container = renderDay(day, { excludeDates: [day] });
+      expect(
+        safeQuerySelector(container, ".react-datepicker__day").getAttribute(
+          "aria-label",
+        ),
+      ).toBe("Not available Wednesday, May 26, 2021");
+    });
+
+    describe("should contain the visible day number as a whole word", () => {
+      // WCAG 2.5.3 (Label in Name): the accessible name must contain the
+      // visible text, compared word by word, with anything that is not a
+      // letter or a number separating words. A visible "1" is therefore not
+      // contained in "1st", but it is contained in "1.".
+      function containsWord(text: string, word: string) {
+        return text
+          .split(new RegExp("[^\\p{L}\\p{N}]+", "u"))
+          .some((token) => token === word);
+      }
+
+      beforeAll(() => {
+        registerLocale("en-GB", enGB);
+        registerLocale("fr", fr);
+      });
+
+      it.each([
+        ["no locale", undefined],
+        ["en-US", enUS],
+        ["en-GB (registered name)", "en-GB"],
+        ["de", de],
+        ["fr (registered name)", "fr"],
+        ["es", es],
+        ["hi", hi],
+      ])("with %s", (_name, locale) => {
+        for (let date = 1; date <= 31; date++) {
+          const container = renderDay(new Date(2026, 0, date), { locale });
+          const dayElement = safeQuerySelector(
+            container,
+            ".react-datepicker__day",
+          );
+          const visibleText = dayElement.textContent ?? "";
+          const ariaLabel = dayElement.getAttribute("aria-label") ?? "";
+
+          expect(visibleText).toBe(String(date));
+          expect(containsWord(ariaLabel, visibleText)).toBe(true);
+        }
+      });
     });
 
     it("should display date in Spanish if Spanish locale is provided", () => {
