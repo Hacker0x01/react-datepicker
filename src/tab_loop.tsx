@@ -1,5 +1,7 @@
 import React, { Component, createRef } from "react";
 
+import { findElements } from "./dom_utils";
+
 import type { ReactNode } from "react";
 
 interface TabLoopProps {
@@ -9,14 +11,13 @@ interface TabLoopProps {
 
 const focusableElementsSelector =
   "[tabindex], a, button, input, select, textarea";
-const focusableFilter = (
-  node:
-    | HTMLButtonElement
-    | HTMLInputElement
-    | HTMLSelectElement
-    | HTMLTextAreaElement
-    | HTMLAnchorElement,
-) => {
+type FocusableElement =
+  | HTMLButtonElement
+  | HTMLInputElement
+  | HTMLSelectElement
+  | HTMLTextAreaElement
+  | HTMLAnchorElement;
+const focusableFilter = (node: FocusableElement) => {
   if (node instanceof HTMLAnchorElement) {
     return node.tabIndex !== -1;
   }
@@ -65,24 +66,21 @@ export default class TabLoop extends Component<TabLoopProps> {
    * @returns An array of all tabbable and visible children of the `TabLoop` component.
    */
   getTabChildren = () =>
-    Array.prototype.slice
-      .call(
-        this.tabLoopRef.current?.querySelectorAll(focusableElementsSelector),
-        1,
-        -1,
-      )
+    findElements<FocusableElement>(
+      this.tabLoopRef.current,
+      focusableElementsSelector,
+    )
+      .slice(1, -1)
       .filter(focusableFilter);
 
   handleFocusStart = () => {
     const tabChildren = this.getTabChildren();
-    tabChildren &&
-      tabChildren.length > 1 &&
-      tabChildren[tabChildren.length - 1].focus();
+    tabChildren.length > 1 && tabChildren[tabChildren.length - 1]?.focus();
   };
 
   handleFocusEnd = () => {
     const tabChildren = this.getTabChildren();
-    tabChildren && tabChildren.length > 1 && tabChildren[0].focus();
+    tabChildren.length > 1 && tabChildren[0]?.focus();
   };
 
   render(): React.ReactNode {

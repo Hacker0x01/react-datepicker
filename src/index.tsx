@@ -3,6 +3,7 @@ import React, { Component, cloneElement } from "react";
 
 import Calendar, { OUTSIDE_CLICK_IGNORE_CLASS } from "./calendar";
 import CalendarIcon from "./calendar_icon";
+import { findElement, findElements } from "./dom_utils";
 import {
   newDate,
   isDate,
@@ -1331,13 +1332,12 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     if (parsedDate && isValid(parsedDate)) {
       timeToCommit = parsedDate;
     } else {
-      const highlightedItem =
-        this.calendar?.containerRef.current instanceof Element &&
-        this.calendar.containerRef.current.querySelector(
-          ".react-datepicker__time-list-item[tabindex='0']",
-        );
+      const highlightedItem = findElement(
+        this.calendar?.containerRef.current,
+        ".react-datepicker__time-list-item[tabindex='0']",
+      );
 
-      if (highlightedItem instanceof HTMLElement) {
+      if (highlightedItem) {
         const itemText = highlightedItem.textContent?.trim();
         if (itemText) {
           const itemTime = parseDate(
@@ -1364,11 +1364,9 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
       return;
     }
 
-    const container = this.calendar.containerRef.current;
-    const timeListItems = Array.from(
-      container.querySelectorAll<HTMLLIElement>(
-        ".react-datepicker__time-list-item",
-      ),
+    const timeListItems = findElements<HTMLLIElement>(
+      this.calendar.containerRef.current,
+      ".react-datepicker__time-list-item",
     );
 
     let targetItem: HTMLLIElement | null = null;
@@ -1457,11 +1455,11 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
                 this.props.showMonthYearPicker
               ? '.react-datepicker__month-text[tabindex="0"]'
               : '.react-datepicker__day[tabindex="0"]';
-        const selectedItem =
-          this.calendar?.containerRef.current instanceof Element &&
-          this.calendar.containerRef.current.querySelector(selectorString);
-        selectedItem instanceof HTMLElement &&
-          selectedItem.focus({ preventScroll: true });
+        const selectedItem = findElement(
+          this.calendar?.containerRef.current,
+          selectorString,
+        );
+        selectedItem?.focus({ preventScroll: true });
 
         return;
       }
