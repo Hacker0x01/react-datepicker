@@ -22,6 +22,7 @@ import {
   type HolidaysMap,
   KeyType,
 } from "./date_utils";
+import { isFocusOnClassInside, isNothingFocused } from "./dom_utils";
 
 interface DayProps extends Pick<
   DateFilterOptionsWithDisabled,
@@ -543,7 +544,7 @@ export default class Day extends Component<DayProps> {
     let shouldFocusDay = false;
     if (this.getTabIndex() === 0 && this.isSameDay(this.props.preSelection)) {
       // there is currently no activeElement and not inline
-      if (!document.activeElement || document.activeElement === document.body) {
+      if (isNothingFocused()) {
         shouldFocusDay = true;
       }
       // inline version:
@@ -564,9 +565,9 @@ export default class Day extends Component<DayProps> {
 
   // the activeElement is in the container, and it is another instance of Day
   private isDayActiveElement() {
-    return (
-      this.props.containerRef?.current?.contains(document.activeElement) &&
-      document.activeElement?.classList.contains("react-datepicker__day")
+    return isFocusOnClassInside(
+      this.props.containerRef?.current,
+      "react-datepicker__day",
     );
   }
 

@@ -18,6 +18,7 @@ import {
   type TimeFilterOptions,
   KeyType,
 } from "./date_utils";
+import { focusSibling } from "./dom_utils";
 
 interface TimeProps extends Pick<
   TimeFilterOptions,
@@ -191,21 +192,15 @@ export default class Time extends Component<TimeProps, TimeState> {
 
     if (
       (event.key === KeyType.ArrowUp || event.key === KeyType.ArrowLeft) &&
-      event.target instanceof HTMLElement &&
-      event.target.previousSibling
+      focusSibling(event.target, "previous")
     ) {
       event.preventDefault();
-      event.target.previousSibling instanceof HTMLElement &&
-        event.target.previousSibling.focus();
     }
     if (
       (event.key === KeyType.ArrowDown || event.key === KeyType.ArrowRight) &&
-      event.target instanceof HTMLElement &&
-      event.target.nextSibling
+      focusSibling(event.target, "next")
     ) {
       event.preventDefault();
-      event.target.nextSibling instanceof HTMLElement &&
-        event.target.nextSibling.focus();
     }
 
     if (event.key === KeyType.Enter) {

@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import React, { Component, createRef } from "react";
 
 import { KeyType, isSameDay } from "./date_utils";
+import { isFocusOnClassInside, isNothingFocused } from "./dom_utils";
 
 interface WeekNumberProps {
   weekNumber: number;
@@ -81,7 +82,7 @@ export default class WeekNumber extends Component<WeekNumberProps> {
       isSameDay(this.props.date, this.props.preSelection)
     ) {
       // there is currently no activeElement and not inline
-      if (!document.activeElement || document.activeElement === document.body) {
+      if (isNothingFocused()) {
         shouldFocusWeekNumber = true;
       }
       // inline version:
@@ -92,11 +93,8 @@ export default class WeekNumber extends Component<WeekNumberProps> {
       }
       // the activeElement is in the container, and it is another instance of WeekNumber
       if (
-        this.props.containerRef &&
-        this.props.containerRef.current &&
-        this.props.containerRef.current.contains(document.activeElement) &&
-        document.activeElement &&
-        document.activeElement.classList.contains(
+        isFocusOnClassInside(
+          this.props.containerRef?.current,
           "react-datepicker__week-number",
         )
       ) {
