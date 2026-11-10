@@ -20,6 +20,21 @@ describe("DatePicker", () => {
     expect(timeComponent).not.toBeNull();
   });
 
+  it.each(["disabled", "readOnly"] as const)(
+    "does not change the time when the open picker becomes %s",
+    (lockProp) => {
+      const selected = new Date(2024, 0, 15, 12);
+      const onChange = jest.fn();
+      const props = { open: true, showTimeSelect: true, selected, onChange };
+      const { rerender, getByRole } = render(<DatePicker {...props} />);
+
+      rerender(<DatePicker {...props} {...{ [lockProp]: true }} />);
+      fireEvent.click(getByRole("option", { name: "12:30 PM" }));
+
+      expect(onChange).not.toHaveBeenCalled();
+    },
+  );
+
   it("should have custom time caption", () => {
     const { container } = render(<TimeComponent timeCaption="Custom time" />);
 

@@ -1093,7 +1093,11 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   };
 
   handleTimeChange = (time: Date, modifyDateType?: "start" | "end"): void => {
-    if (this.props.selectsMultiple) {
+    if (
+      this.props.disabled ||
+      this.props.readOnly ||
+      this.props.selectsMultiple
+    ) {
       return;
     }
 
