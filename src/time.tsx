@@ -228,7 +228,7 @@ export default class Time extends Component<TimeProps, TimeState> {
     const base = getStartOfDay(activeDate);
     const sortedInjectTimes =
       this.props.injectTimes &&
-      this.props.injectTimes.sort(function (a: Date, b: Date): number {
+      [...this.props.injectTimes].sort(function (a: Date, b: Date): number {
         return a.getTime() - b.getTime();
       });
 
