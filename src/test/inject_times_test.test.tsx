@@ -11,6 +11,42 @@ import {
 import TimeComponent from "../time";
 
 describe("TimeComponent", () => {
+  it("should leave the caller's injected times in their original order", () => {
+    const today = getStartOfDay(newDate());
+    const injectTimes = [
+      addMinutes(today, 3),
+      addMinutes(today, 1),
+      addMinutes(today, 2),
+    ];
+    const originalOrder = [...injectTimes];
+    const { container } = render(<TimeComponent injectTimes={injectTimes} />);
+
+    expect(injectTimes).toEqual(originalOrder);
+    const injectedItems = container.querySelectorAll(
+      ".react-datepicker__time-list-item--injected",
+    );
+    expect(Array.from(injectedItems).map((node) => node.textContent)).toEqual([
+      "12:01 AM",
+      "12:02 AM",
+      "12:03 AM",
+    ]);
+  });
+
+  it("should accept frozen injected times", () => {
+    const today = getStartOfDay(newDate());
+    const injectTimes = [addMinutes(today, 3), addMinutes(today, 1)];
+    Object.freeze(injectTimes);
+    const { container } = render(<TimeComponent injectTimes={injectTimes} />);
+
+    const injectedItems = container.querySelectorAll(
+      ".react-datepicker__time-list-item--injected",
+    );
+    expect(Array.from(injectedItems).map((node) => node.textContent)).toEqual([
+      "12:01 AM",
+      "12:03 AM",
+    ]);
+  });
+
   it("should show times specified in injectTimes props", () => {
     const today = getStartOfDay(newDate());
     const { container } = render(
