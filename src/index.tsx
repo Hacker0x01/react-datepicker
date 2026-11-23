@@ -405,6 +405,22 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
     ) {
       this.setState({ monthSelectedIn: 0 });
     }
+    // A controlled opening does not change state.open. Discard the previous
+    // panel offset and restore the current range start for the new view.
+    if (
+      this.props.open !== undefined &&
+      !this.props.inline &&
+      this.props.selectsRange &&
+      (this.props.monthsShown ?? 1) > 1 &&
+      !this.props.focusSelectedMonth &&
+      !this.isCalendarOpen(prevProps, prevState) &&
+      this.isCalendarOpen()
+    ) {
+      this.setState({
+        preSelection: this.calcInitialState().preSelection,
+        monthSelectedIn: 0,
+      });
+    }
     // Reset monthSelectedIn when calendar opens for range selection
     // This ensures startDate is displayed as the first month when reopening
     // (Fix for #5939), but we don't reset during active selection to avoid
@@ -642,10 +658,13 @@ export class DatePicker extends Component<DatePickerProps, DatePickerState> {
   };
   inputOk = (): boolean => isDate(this.state.preSelection);
 
-  isCalendarOpen = () =>
-    this.props.open === undefined
-      ? this.state.open && !this.props.disabled && !this.props.readOnly
-      : this.props.open;
+  isCalendarOpen = (
+    props: DatePickerProps = this.props,
+    state: DatePickerState = this.state,
+  ) =>
+    props.open === undefined
+      ? state.open && !props.disabled && !props.readOnly
+      : props.open;
 
   handleFocus = (event: React.FocusEvent<HTMLElement>): void => {
     const isAutoReFocus = this.state.wasHidden;
